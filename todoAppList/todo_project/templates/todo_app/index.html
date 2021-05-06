@@ -1,0 +1,59 @@
+{% extends "todo_app/base.html" %}
+
+{% block title %}
+  HOME PAGE
+{% endblock title %}
+
+{% block content %}
+  
+    <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4"><center>TO-DO LIST</center></h1>
+      <p class="lead"><center>This is To-Do list for Python Django Web Development</center></p>
+      <div class="text-center">
+        <a class="btn btn-outline-danger" href="{% url 'create' %}" role="button">Create New TO-DO</a>
+      </div>
+    </div>
+  </div>
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">To-Do Name</th>
+        <th scope="col">Is Finished?</th>
+        <th scope="col">Date and Time</th>
+        <th scope="col">Delete</th>
+        <th scope="col">Update</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for todo in todo_list %} 
+          {% if todo.finished %}
+            <tr>
+                <td><del>{{ todo.title }}</del></td>
+                <td><a class="btn btn-danger" href="{% url 'yes_finish' todo.id %}" role="button">Yes</a></td>
+                <td>{{ todo.date }}</td>
+                <td><a class="btn btn-danger" href="{% url 'delete' todo.id %}" role="button">Delete</a></td>
+                <td><a class="btn btn-dark" href="{% url 'update' todo.id %}" role="button">Update</a></td>
+                <td>{{ todo.description }}</td>
+            </tr>
+          {% else %}
+            <tr>
+                <td>{{ todo.title }}</td>
+                <td><a class="btn btn-dark" href="{% url 'no_finish' todo.id %}" role="button">No</a></td>
+                <td>{{ todo.date }}</td>
+                <td><a class="btn btn-danger" href="{% url 'delete' todo.id %}" role="button">Delete</a></td>
+                <td><a class="btn btn-dark" href="{% url 'update' todo.id %}" role="button">Update</a></td>
+                <td>{{ todo.description }}</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+    </tbody>
+  </table>
+        
+</div>
+
+  
+
+{% endblock content %}
